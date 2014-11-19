@@ -499,6 +499,22 @@ var _ = {};
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
+      var counter = 0
+      var arrRecursion = function(arr){
+        for(var i = 0; i < arr.length; i++){
+          if(Array.isArray(arr[i])){
+            arrRecursion(arr[i]);
+          }
+          else{
+            flat_arr.push(arr[i]);
+          }
+        }//for
+      }//arrRecursion
+
+     var flat_arr = [];
+     arrRecursion(nestedArray);
+     console.log(flat_arr);
+     return flat_arr;
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
@@ -509,6 +525,21 @@ var _ = {};
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
+    var one_arr = arguments[0];//base
+    for(var i = 1; i < arguments.length; i++){
+      //loop to iterate through first array to grab targets items 
+      for(var j = 0; j < arguments[i].length; j++){
+        var item = arguments[i][j];
+        if(_.contains(one_arr, item)){
+          //REMOVE ELEMENT FROM ONE_ARR
+          var index = one_arr.indexOf(item);
+          if (index > -1) {
+            one_arr.splice(index, 1);
+          }//if 2nd
+        }//if
+      }//2nd for
+    }//for
+    return one_arr;
   };
 
 
@@ -526,8 +557,6 @@ var _ = {};
 
 }).call(this);//by henry wong
 //TESTING FUNCTIONS..........................................
-var array = [1,2,3];
-var obj = {1:"sup", 2:"duder"};
-_.each(array, function(item1, item2, item3){
-  debug(item1);
-});
+// var arg0 = [1,2,3];
+// var arg1 = [3,4,5];
+// debug(_.difference(arg0, arg1));
